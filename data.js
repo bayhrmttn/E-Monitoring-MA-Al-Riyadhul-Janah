@@ -35,23 +35,23 @@ const SURAT_PILIHAN_LIST = [
   "Al-Baqarah (ayat pilihan)","Ali Imran (ayat pilihan)","Ad-Dukhan","Al-Insan"
 ];
 
-const GURU_PIKET_LIST = [
-  { username: "piket1", password: "piket123", nama: "Nani Roswinah, S.Pd" },
-  { username: "piket2", password: "piket123", nama: "Yuyu Yuhartika, S.Pd" },
-  { username: "piket3", password: "piket123", nama: "Zahrotul Uyun, S.Pd" },
-  { username: "piket4", password: "piket123", nama: "Dzulkarnaen, S.Hi" },
-  { username: "piket5", password: "piket123", nama: "Sumirah, S.Pd.I" },
-  { username: "piket6", password: "piket123", nama: "Andri Kurniawan, S.Pd, M.Pd" },
-  { username: "piket7", password: "piket123", nama: "Umayah, S.Pd" },
-  { username: "piket8", password: "piket123", nama: "Nani Fitriani, S.Pd.I" },
-  { username: "piket9", password: "piket123", nama: "Rusmiati, S.Pd" },
-  { username: "piket10", password: "piket123", nama: "Firman Alamsyah, S.Pd" },
-  { username: "piket11", password: "piket123", nama: "Hasanudin, S.Pd" },
-  { username: "piket12", password: "piket123", nama: "Ikbal Nugraha, S.Pd" },
-  { username: "piket13", password: "piket123", nama: "Muhamad Yosep, S.Pd" },
-  { username: "piket14", password: "piket123", nama: "Siti Allubabah" },
-  { username: "piket15", password: "piket123", nama: "Miftahul Lukman, S.Pd" },
-  { username: "piket16", password: "piket123", nama: "Tutin Sulistino, S.Pd" },
-  { username: "piket17", password: "piket123", nama: "Moh. Ipan, S.Kom" },
-  { username: "piket18", password: "piket123", nama: "Depan Maulana Pamungkas, S.Pd" }
+// Hapus/ganti GURU_guru_LIST lama (jika ada) dengan DEFAULT_GURU berikut:
+const DEFAULT_GURU = [
+  { gid:"G001", username:"admin",  password:"rijan123",  nama:"Kepala Sekolah / Admin", jabatan:"Administrator" },
+  { gid:"G002", username:"guru1", password:"guru123",  nama:"Nani Roswinah, S.Pd", jabatan:"Guru" },
+  { gid:"G003", username:"guru2", password:"guru123",  nama:"Yuyu Yuhartika, S.Pd", jabatan:"Guru" },
+  { gid:"G004", username:"guru2", password:"guru123",  nama:"Zahrotul Uyun, S.Pd", jabatan:"Guru" },
+  { gid:"G005", username:"guru2", password:"guru123",  nama:"Dzulkarnaen, S.Hi", jabatan:"Guru" },
+  { gid:"G006", username:"guru2", password:"guru123",  nama:"Sumirah, S.Pd.I", jabatan:"Guru" },
+  { gid:"G007", username:"guru2", password:"guru123",  nama:"Andri Kurniawan, S.Pd, M.Pd", jabatan:"Guru" },
+  { gid:"G008", username:"guru2", password:"guru123",  nama:"Umayah, S.Pd", jabatan:"Guru" },
+  { gid:"G009", username:"guru2", password:"guru123",  nama:"Rusmiati, S.Pd", jabatan:"Guru" },
+  { gid:"G010", username:"guru2", password:"guru123",  nama:"Firman Alamsyah, S.Pd", jabatan:"Guru" },
+  { gid:"G011", username:"guru2", password:"guru123",  nama:"Muhamad Yosep, S.Pd", jabatan:"Guru" },
+  { gid:"G012", username:"guru2", password:"guru123",  nama:"Siti Allubabah", jabatan:"Guru" },
+  { gid:"G013", username:"guru2", password:"guru123",  nama:"Miftahul Lukman, S.Pd", jabatan:"Guru" },
+  { gid:"G014", username:"guru2", password:"guru123",  nama:"Tutin Sulistino, S.Pd", jabatan:"Guru" },
+  { gid:"G015", username:"guru2", password:"guru123",  nama:"Moh. Ipan, S.Kom", jabatan:"Guru" },
+  { gid:"G016", username:"guru2", password:"guru123",  nama:"Depan Maulana Pamungkas, S.Pd", jabatan:"Guru" },
+  { gid:"G017", username:"guru3", password:"guru123",  nama:"Ikbal Nugraha, S.Pd", jabatan:"Guru" }
 ];

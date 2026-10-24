@@ -27,6 +27,7 @@
       <button class="nav-item" data-page="hafalan">📖 Setoran Hafalan</button>
       <button class="nav-item" data-page="sholat">🕌 Absen Sholat</button>
       <button class="nav-item" data-page="siswa">👥 Data Siswa</button>
+      <button class="nav-item" data-page="guru">🧑‍🏫 Data Guru</button>
       <button class="nav-item" data-page="rekap">📋 Rekap Hasil</button>
       <button class="nav-item" data-page="laporan">🧾 Laporan Bulanan</button>
     </nav>
@@ -34,9 +35,19 @@
     <div class="sidebar-footer">
       <button id="btnToggleTheme" class="btn-theme">🌙 Mode Gelap</button>
 
+      <div id="adminBox" class="guru-piket-box">
+        <div id="adminBelumLogin">
+          <button id="btnLoginAdmin" class="btn-refresh">🔑 Mode Admin (PIN)</button>
+        </div>
+        <div id="adminSudahLogin" class="hidden">
+          <p class="gp-nama">🔑 Admin Aktif</p>
+          <button id="btnLogoutAdmin" class="btn-secondary btn-sm">Logout Admin</button>
+        </div>
+      </div>
+
       <div id="guruPiketBox" class="guru-piket-box">
         <div id="guruPiketBelumLogin">
-          <button id="btnLoginGuruPiket" class="btn-refresh">👤 Login Guru Piket</button>
+          <button id="btnLoginGuruPiket" class="btn-refresh">👤 Login Guru/Piket</button>
         </div>
         <div id="guruPiketSudahLogin" class="hidden">
           <p class="gp-nama">👤 <span id="namaGuruPiketAktif"></span></p>
@@ -65,7 +76,7 @@
         <canvas id="chartMingguan" height="90"></canvas>
       </div>
       <div class="card">
-        <h3>🧑‍🏫 Guru Piket Bertugas Hari Ini</h3>
+        <h3>🧑‍🏫 Guru Piket Login Hari Ini</h3>
         <div id="guruPiketHariIni" class="list-aktivitas"></div>
       </div>
       <div class="card">
@@ -77,29 +88,40 @@
     <!-- ABSEN MASUK/PULANG -->
     <section id="page-absen" class="page">
       <div id="absenLocked" class="card locked-card">
-        <h3>🔒 Khusus Guru Piket</h3>
-        <p>Halaman ini hanya bisa digunakan oleh Guru Piket yang sedang bertugas.</p>
-        <p>Silakan login terlebih dahulu melalui tombol di bawah ini.</p>
-        <button class="btn-primary" id="btnKeLoginGuruDariAbsen">👤 Login Guru Piket</button>
+        <h3>🔒 Khusus Admin / Guru Piket</h3>
+        <p>Halaman ini hanya bisa digunakan oleh Admin atau Guru Piket yang sedang bertugas.</p>
+        <button class="btn-primary" id="btnKeLoginGuruDariAbsen">👤 Login Guru/Piket</button>
       </div>
 
       <div id="absenUnlocked" class="hidden">
         <div class="card guru-aktif-info">
-          <p>🧑‍🏫 Piket aktif: <strong id="namaGuruPiketDiAbsen"></strong></p>
+          <p>🧑‍🏫 Petugas aktif: <strong id="namaGuruPiketDiAbsen"></strong></p>
         </div>
+
+        <div class="toggle-mode">
+          <button class="mode-btn active" id="btnJenisAbsenSiswa">👥 Absen Siswa</button>
+          <button class="mode-btn" id="btnJenisAbsenGuru">🧑‍🏫 Absen Guru</button>
+        </div>
+
         <div class="toggle-mode">
           <button class="mode-btn active" id="btnModeMasuk">Absen Masuk</button>
           <button class="mode-btn" id="btnModePulang">Absen Pulang</button>
         </div>
+
         <div class="card scan-card">
-          <h3 id="labelScanAbsen">Scan Kartu untuk Absen Masuk</h3>
+          <h3 id="labelScanAbsen">Scan Kartu Siswa untuk Absen Masuk</h3>
           <input type="text" id="inputScanAbsen" placeholder="Scan barcode di sini..." autofocus>
           <button class="btn-secondary" id="btnKameraAbsen">📷 Scan via Kamera</button>
           <div id="feedbackAbsen" class="scan-feedback"></div>
         </div>
-        <div class="card">
-          <h3>Data Absen Hari Ini</h3>
+
+        <div id="tabelAbsenSiswaWrap" class="card">
+          <h3>Data Absen Siswa Hari Ini</h3>
           <div class="table-wrap"><table id="tabelAbsenHariIni"></table></div>
+        </div>
+        <div id="tabelAbsenGuruWrap" class="card hidden">
+          <h3>Data Absen Guru Hari Ini</h3>
+          <div class="table-wrap"><table id="tabelAbsenGuruHariIni"></table></div>
         </div>
       </div>
     </section>
@@ -140,9 +162,8 @@
     <section id="page-siswa" class="page">
       <div id="siswaLocked" class="card locked-card">
         <h3>🔒 Mode Admin Diperlukan</h3>
-        <p>Masukkan PIN admin untuk mengelola data siswa.</p>
-        <input type="password" id="inputPinSiswa" placeholder="PIN Admin">
-        <button class="btn-primary" id="btnBukaSiswa">Masuk</button>
+        <p>Aktifkan Mode Admin melalui sidebar untuk mengelola data siswa.</p>
+        <button class="btn-primary" id="btnKeAdminDariSiswa">🔑 Login Admin</button>
       </div>
       <div id="siswaUnlocked" class="hidden">
         <div class="toolbar">
@@ -159,13 +180,33 @@
       </div>
     </section>
 
+    <!-- DATA GURU -->
+    <section id="page-guru" class="page">
+      <div id="guruLocked" class="card locked-card">
+        <h3>🔒 Mode Admin Diperlukan</h3>
+        <p>Aktifkan Mode Admin melalui sidebar untuk mengelola data guru.</p>
+        <button class="btn-primary" id="btnKeAdminDariGuru">🔑 Login Admin</button>
+      </div>
+      <div id="guruUnlocked" class="hidden">
+        <div class="toolbar">
+          <input type="text" id="searchGuru" placeholder="🔍 Cari nama/username/GID...">
+          <button class="btn-primary" id="btnTambahGuru">+ Tambah Guru</button>
+        </div>
+        <div class="toolbar">
+          <button class="btn-secondary" id="btnCetakGuruDipilih">🖨️ Cetak Kartu Dipilih</button>
+          <button class="btn-secondary" id="btnCetakGuruSemua">🖨️ Cetak Semua Kartu Guru</button>
+        </div>
+        <div class="table-wrap"><table id="tabelGuru"></table></div>
+      </div>
+    </section>
+
     <!-- REKAP -->
     <section id="page-rekap" class="page">
       <div class="toggle-mode">
         <button class="mode-btn active" data-tab="absen">Absen Masuk/Pulang</button>
         <button class="mode-btn" data-tab="hafalan">Setoran Hafalan</button>
         <button class="mode-btn" data-tab="sholat">Absen Sholat</button>
-        <button class="mode-btn" data-tab="guru">Guru Piket</button>
+        <button class="mode-btn" data-tab="guru">Login Guru Piket</button>
       </div>
       <div class="toolbar">
         <label>Dari: <input type="date" id="rekapDariTgl"></label>
@@ -182,16 +223,35 @@
     <section id="page-laporan" class="page">
       <div class="card">
         <h3>🧾 Generate Laporan Bulanan</h3>
-        <div class="toolbar">
-          <select id="laporanPilihSiswa"><option value="">-- Pilih Siswa --</option></select>
-          <input type="month" id="laporanBulan">
-          <button class="btn-primary" id="btnTampilkanLaporan">Tampilkan Laporan</button>
+        <div class="toggle-mode">
+          <button class="mode-btn active" id="btnTabLaporanSiswa">Laporan Siswa</button>
+          <button class="mode-btn" id="btnTabLaporanGuru">Laporan Guru</button>
         </div>
-        <div class="toolbar">
-          <select id="laporanFilterKelas"><option value="">-- Pilih Kelas untuk Laporan Massal --</option></select>
-          <button class="btn-secondary" id="btnGenerateLaporanSemua">Generate Laporan 1 Kelas</button>
-          <button class="btn-secondary" id="btnGenerateLaporanSemuaSiswa">Generate Laporan Semua Siswa</button>
+
+        <div id="laporanSiswaBox">
+          <div class="toolbar">
+            <select id="laporanPilihSiswa"><option value="">-- Pilih Siswa --</option></select>
+            <input type="month" id="laporanBulan">
+            <button class="btn-primary" id="btnTampilkanLaporan">Tampilkan Laporan</button>
+          </div>
+          <div class="toolbar">
+            <select id="laporanFilterKelas"><option value="">-- Pilih Kelas untuk Laporan Massal --</option></select>
+            <button class="btn-secondary" id="btnGenerateLaporanSemua">Generate Laporan 1 Kelas</button>
+            <button class="btn-secondary" id="btnGenerateLaporanSemuaSiswa">Generate Laporan Semua Siswa</button>
+          </div>
         </div>
+
+        <div id="laporanGuruBox" class="hidden">
+          <div class="toolbar">
+            <select id="laporanPilihGuru"><option value="">-- Pilih Guru --</option></select>
+            <input type="month" id="laporanBulanGuru">
+            <button class="btn-primary" id="btnTampilkanLaporanGuru">Tampilkan Laporan</button>
+          </div>
+          <div class="toolbar">
+            <button class="btn-secondary" id="btnGenerateLaporanSemuaGuru">Generate Laporan Semua Guru</button>
+          </div>
+        </div>
+
         <div class="toolbar">
           <button class="btn-secondary" id="btnPrintLaporan">🖨️ Cetak Laporan</button>
           <button class="btn-secondary" id="btnUnduhLaporan">⬇️ Unduh sebagai Gambar</button>
@@ -202,11 +262,23 @@
   </main>
 </div>
 
+<!-- MODAL ADMIN LOGIN -->
+<div id="modalAdminLogin" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h3>🔑 Login Mode Admin</h3>
+    <label>PIN Admin</label>
+    <input type="password" id="inputAdminPinModal" placeholder="Masukkan PIN">
+    <div class="modal-actions">
+      <button class="btn-secondary" id="btnBatalAdminLogin">Batal</button>
+      <button class="btn-primary" id="btnSubmitAdminLogin">Masuk</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL FORM SISWA -->
 <div id="modalSiswaForm" class="modal-overlay hidden">
   <div class="modal-box">
     <h3 id="judulModalSiswa">Tambah Siswa</h3>
-    <input type="hidden" id="editNisLama">
     <label>NIS</label><input type="text" id="formNis">
     <label>Nama</label><input type="text" id="formNama">
     <label>Kelas</label><input type="text" id="formKelas" placeholder="Contoh: XI IPA">
@@ -215,6 +287,22 @@
     <div class="modal-actions">
       <button class="btn-secondary" id="btnBatalSiswa">Batal</button>
       <button class="btn-primary" id="btnSimpanSiswa">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FORM GURU -->
+<div id="modalGuruForm" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h3 id="judulModalGuru">Tambah Guru</h3>
+    <label>GID (Kode Barcode)</label><input type="text" id="formGid" placeholder="Contoh: G005">
+    <label>Username</label><input type="text" id="formGuruUsername">
+    <label>Password</label><input type="text" id="formGuruPassword">
+    <label>Nama Lengkap</label><input type="text" id="formGuruNama">
+    <label>Jabatan</label><input type="text" id="formGuruJabatan" placeholder="Guru Piket / Guru Tahfidz / Administrator">
+    <div class="modal-actions">
+      <button class="btn-secondary" id="btnBatalGuru">Batal</button>
+      <button class="btn-primary" id="btnSimpanGuru">Simpan</button>
     </div>
   </div>
 </div>
@@ -260,7 +348,7 @@
 <!-- MODAL KARTU -->
 <div id="modalKartu" class="modal-overlay hidden">
   <div class="modal-box modal-wide">
-    <h3>Kartu Siswa</h3>
+    <h3>Kartu Identitas</h3>
     <div id="areaKartu" class="area-kartu"></div>
     <div class="modal-actions">
       <button class="btn-secondary" id="btnTutupKartu">Tutup</button>
@@ -270,17 +358,35 @@
   </div>
 </div>
 
-<!-- MODAL LOGIN GURU PIKET -->
+<!-- MODAL LOGIN GURU/PIKET -->
 <div id="modalGuruPiket" class="modal-overlay hidden">
   <div class="modal-box">
-    <h3>Login Guru Piket</h3>
-    <label>Username</label>
-    <input type="text" id="gpUsername" placeholder="Username">
-    <label>Password</label>
-    <input type="password" id="gpPassword" placeholder="Password">
-    <div class="modal-actions">
-      <button class="btn-secondary" id="btnBatalLoginGuru">Batal</button>
-      <button class="btn-primary" id="btnSubmitLoginGuru">Login</button>
+    <h3>Login Guru / Guru Piket</h3>
+
+    <div class="toggle-mode">
+      <button class="mode-btn active" id="tabLoginManual">Username & Password</button>
+      <button class="mode-btn" id="tabLoginBarcode">Scan Barcode</button>
+    </div>
+
+    <div id="loginManualBox">
+      <label>Username</label>
+      <input type="text" id="gpUsername" placeholder="Username">
+      <label>Password</label>
+      <input type="password" id="gpPassword" placeholder="Password">
+      <div class="modal-actions">
+        <button class="btn-secondary" id="btnBatalLoginGuru">Batal</button>
+        <button class="btn-primary" id="btnSubmitLoginGuru">Login</button>
+      </div>
+    </div>
+
+    <div id="loginBarcodeBox" class="hidden">
+      <label>Scan Kartu Guru</label>
+      <input type="text" id="gpBarcodeInput" placeholder="Scan barcode di sini...">
+      <button class="btn-secondary" id="btnKameraLoginGuru">📷 Scan via Kamera</button>
+      <div id="feedbackLoginGuru" class="scan-feedback"></div>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="btnBatalLoginGuruBarcode">Batal</button>
+      </div>
     </div>
   </div>
 </div>

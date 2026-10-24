@@ -204,3 +204,7 @@ body[data-theme="dark"] .laporan-card h4{color:var(--primary-light);}
   #areaLaporan{ position:absolute; left:0; top:0; width:100%; }
   .laporan-card{ page-break-inside:avoid; box-shadow:none; }
 }
+
+.btn-sm{padding:6px 10px !important;font-size:12px;width:100%;}
+.guru-aktif-info strong{color:var(--primary-dark);}
+body[data-theme="dark"] .guru-aktif-info strong{color:var(--primary-light);}
